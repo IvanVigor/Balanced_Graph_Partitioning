@@ -1,9 +1,9 @@
------------------- Project: Balanced Graph Partitioning ---------------------
+### Project: Balanced Graph Partitioning
 Accademic year 2016/17, course "Advanced Algorithms and Parallel Programming"
 Code authors: Lorenzo Frigerio, Ivan Vigorito
 
 
------------------- Installation Windows -------------------------------------
+## Installation Windows 
 
 The code wast tested with python 3.5 with these additional libraries:
 - numpy
@@ -23,7 +23,7 @@ In order to install them:
 
 
 		
------------------- Installation Linux -------------------------------------
+## Installation Linux 
 
 The code wast tested with Python 2.7.11 because igraph library is not compatible with
 Python 2.7+ versions.
