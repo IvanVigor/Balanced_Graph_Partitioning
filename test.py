@@ -6,9 +6,14 @@ import itertools
 import numpy as np
 import timeit
 import bisect
-from BinPackerDynamic import Binpacker,Item
-from kernighanLin import kernighan_lin_bisection
-from Tree import Tree,TreeUtil
+import sys
+
+if sys.version_info[0] > 2:
+    from src.BinPackerDynamic import Binpacker,Item
+    from src.kernighanLin import kernighan_lin_bisection
+    from src.Tree import Tree
+else:
+    from src import *
 
 import matplotlib.pyplot as plt
 
