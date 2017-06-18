@@ -7,7 +7,7 @@ import numpy as np
 import timeit
 import bisect
 from BinPackerDynamic import Binpacker,Item
-from kernigan import kernighan_lin_bisection
+from kernighanLin import kernighan_lin_bisection
 from Tree import Tree,TreeUtil
 
 import matplotlib.pyplot as plt
@@ -402,6 +402,14 @@ class GraphPartitioning(object):
         bestPBest, p = self.getBestPartitionMethod1(fin, listTrees, listTotalCosts)  # return best partition
         return bestPBest
 
+def saveToFile(file,x,y):
+    x = (' '.join(str(e) for e in x))+" time: "
+    y = ' '.join(str(e) for e in y)
+    file = open(file, "w")
+    file.write(x)
+    file.write(y)
+    file.close()
+
 def testK(samplesForValue,valuesOfK,G,epsilon):
     # G = nx.gaussian_random_partition_graph(50,2,0.1,0.6,0.6)
     # G = nx.connected_watts_strogatz_graph(20,2,0.1)
@@ -426,6 +434,7 @@ def testK(samplesForValue,valuesOfK,G,epsilon):
                 y.append(elapsed)
     print(x)
     print(y)
+    saveToFile("test.txt", x, y)
 
 def testEpsilon(samplesForValue,valuesOfEpsilon,G,k):
     # G = nx.gaussian_random_partition_graph(50,2,0.1,0.6,0.6)
@@ -451,6 +460,7 @@ def testEpsilon(samplesForValue,valuesOfEpsilon,G,k):
                 y.append(elapsed)
     print(x)
     print(y)
+    saveToFile("test.txt", x, y)
 
 def testN(samplesForValue,k,gList,epsilon):
     # G = nx.gaussian_random_partition_graph(50,2,0.1,0.6,0.6)
@@ -476,13 +486,13 @@ def testN(samplesForValue,k,gList,epsilon):
                 y.append(elapsed)
     print(x)
     print(y)
+    saveToFile("test.txt", x, y)
 
 def main():
+    #G = nx.read_weighted_edgelist("graph.csv", delimiter=' ', nodetype=str)
     G = nx.gaussian_random_partition_graph(20,2,0.1,0.6,0.6)
     #G = nx.connected_watts_strogatz_graph(20,2,0.1)
     #G = nx.dorogovtsev_goltsev_mendes_graph(2)
-    nx.write_adjlist(G, "wr.adjlist")
-    G=nx.read_adjlist("wr.adjlist")
     for (u, v) in G.edges():
         G.edge[u][v]['weight'] = 1#random.randint(0, 10)
 

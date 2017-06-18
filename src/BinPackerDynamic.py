@@ -210,12 +210,12 @@ class Binpacker(object):
         """
 
         m = [
-            [True for j in range(capacity + 1)]
+            [True for j in range(int(capacity + 1))]
             for i in range(len(items))
         ]
         for index, item in enumerate(items, 1):
             i = index - 1
-            for j in range(0, capacity + 1):
+            for j in range(0, int(capacity + 1)):
                 if not i:
                     if j != item.weight and j > 0:
                         m[i][j] = False
@@ -223,7 +223,7 @@ class Binpacker(object):
                     if j < item.weight:
                         m[i][j] = m[i - 1][j]
                     else:
-                        m[i][j] = m[i - 1][j] or m[i - 1][j - item.weight]
+                        m[i][j] = m[i - 1][j] or m[i - 1][j - int(item.weight)]
         return m
 
     def _pick_items(self, truth_table):
@@ -246,7 +246,7 @@ class Binpacker(object):
                     if j > 0:
                         picked_items_indices.append(k)
                 else:
-                    if not truth_table[k - 1][j]:
+                    if not truth_table[int(k) - 1][int(j)]:
                         picked_items_indices.append(k)
                         j -= self._items[k].weight
                 k -= 1

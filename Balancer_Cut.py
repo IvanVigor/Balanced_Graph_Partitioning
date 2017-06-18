@@ -4,12 +4,15 @@ import networkx as nx
 import igraph as ig
 import itertools
 import numpy as np
-import timeit
+import sys
 import bisect
 
-from BinPackerDynamic import Binpacker,Item
-from kernighanLin import kernighan_lin_bisection
-from Tree import Tree, TreeUtil
+if sys.version_info[0] > 2:
+    from src.BinPackerDynamic import Binpacker,Item
+    from src.kernighanLin import kernighan_lin_bisection
+    from src.Tree import Tree
+else:
+    from src import *
 
 import matplotlib.pyplot as plt
 
@@ -313,7 +316,7 @@ class GraphPartitioning(object):
                     packer.items.append(Item('A', round(GVector[el])))
             if(len(packer.items) >= self.k and packer.pack_items(self.k)):     # BinPackingProblem(we use the BinPackerDynamic library)
                 return 0,[]                                                    # return cost = 0 if feasible
-            return math.inf,[]                                                 # return cost = infinite if unfeasible
+            return float("inf"),[]                                                 # return cost = infinite if unfeasible
         costs = []
         partitions = []
         for i in range(len(possiblePartitionsCost[index])):
@@ -335,7 +338,6 @@ class GraphPartitioning(object):
 
     def getPartitionAtIPos(self,listTrees,bestP):                               # convert number of partition in a set of elements
         partition = []
-        # cost = 0
         for i in range(len(listTrees)):
             temp = []
             temp.append(listTrees[-i - 1])
@@ -352,27 +354,27 @@ class GraphPartitioning(object):
         else:
             print("no partitions exist")
 
-    def getCostPartition(self, parition, G):                                    # calculate and print the cost of the best partition
+    def getCostPartition(self, parition):                                    # calculate and print the cost of the best partition
         totalCost = 0
         for i in range(len(parition)):                                          # for each couple of subsets in the partition calculate the cost
             for j in range(i + 1, len(parition)):
-                totalCost += self.calculateCostFinal(G, parition[i], parition[j])
+                totalCost += self.calculateCostFinal(self.G, parition[i], parition[j])
         return totalCost                                                        # return the cost for divide all the subsets in the best partition
 
-    def printGraphWithPartitions(self,parition,G):                              # render graphically the best partitions
-        pos = nx.spring_layout(G)  # positions for all nodes
+    def printGraphWithPartitions(self,parition):                              # render graphically the best partitions
+        pos = nx.spring_layout(self.G)  # positions for all nodes
         vet = ['r', 'g', 'b', 'y']                                              # array with all the colors
         for i in range(len(parition)-len(vet)):
             r = lambda: random.randint(0, 255)                                  # generate random color
             vet.append('#%02X%02X%02X' % (r(), r(), r()))
         for i in range(len(parition)):                                          # render each partition with the desired color
-            nx.draw_networkx_nodes(G, pos,
+            nx.draw_networkx_nodes(self.G, pos,
                                    nodelist=parition[i],
                                    node_color=vet[i],
                                    node_size=500,
                                    alpha=0.8)
             # edges
-        nx.draw_networkx_edges(G, pos, width=1.0, alpha=0.5)                    # render the edges
+        nx.draw_networkx_edges(self.G, pos, width=1.0, alpha=0.5)                    # render the edges
         plt.show()
 
     def getWeightsOfNodes(self):                                                  # calculate sum of all the weights of the nodes
@@ -408,27 +410,44 @@ class GraphPartitioning(object):
 
         return bestP
 
-def main():
-    G = nx.gaussian_random_partition_graph(10,2,0.1,0.6,0.6)    #select and generate the intial graph
-    #G = nx.connected_watts_strogatz_graph(15,2,0.1)
-    #G = nx.dorogovtsev_goltsev_mendes_graph(3)
-    nx.write_adjlist(G, "wr.adjlist")
-    G=nx.read_adjlist("wr.adjlist")
-    for (u, v) in G.edges():                                # initialize the wheight of the edges of the graph
-        G.edge[u][v]['weight'] = 1 #random.randint(0, 10)
-    for n in G.nodes():                                     # initialize the wheight of the nodes of the graph
-        G.node[n]['weight'] = 1 #random.random() * 100#
-    epsilon = 0.9                                           # select the input parameter
+    def savePartitionToFile(self,bestP,file):
+        stringToSave = ""
+        for el in bestP:
+            stringToSave += "["
+            for key in el.keys():
+                stringToSave += str(key)+","
+            stringToSave = stringToSave[:-1]
+            stringToSave += "]"
+        file = open("bestPartition.txt", "w")
+        file.write(stringToSave)
+        file.close()
+
+def main(sourceFile,destinationFile,k,epsilon):
+
+    if(sourceFile!=""):
+        G = nx.read_weighted_edgelist(sourceFile, delimiter=' ', nodetype=str)  #read the graph from file(adjacency list) graph.csv is an example of format
+    else:
+        G = nx.gaussian_random_partition_graph(100,2,0.1,0.6,0.6)    #select and generate the intial graph
+        #G = nx.connected_watts_strogatz_graph(15,2,0.1)
+        #G = nx.dorogovtsev_goltsev_mendes_graph(3)
+        for (u, v) in G.edges():                            # initialize the weight of the edges of the graph
+            G.edge[u][v]['weight'] = 1 #random.randint(0, 10)
+    for n in G.nodes():                                     # initialize the weight of the nodes of the graph
+        G.node[n]['weight'] = 1 #random.random() * 100
     n = G.number_of_nodes()
-    k = 3
-    if (nx.is_connected(G) and k<=n ):
+    if (nx.is_connected(G) and k<=n):
         print("Avvio trasformazione di grafo in albero")
         partitor = GraphPartitioning(epsilon, n, k, G)      # create the object and pass it the intial graph
         bestP = partitor.run()                              # run the algorithm and return the best paritition
         print("The best parition is:")
         partitor.printPartition(bestP)                      # print textually the best partition
         print("The cost of the parition is:")
-        print(partitor.getCostPartition(bestP,G))           # calculate and print the cost of the best partition
-        partitor.printGraphWithPartitions(bestP,G)          # render graphically the best partitions
+        print(partitor.getCostPartition(bestP))             # calculate and print the cost of the best partition
+        partitor.printGraphWithPartitions(bestP)            # render graphically the best partitions
+        partitor.savePartitionToFile(bestP,destinationFile) # save the best partition to file
 
-main()
+if(len(sys.argv)==1):
+    main("","bestPartition.txt",3,0.9)     #if sourceFile=="" a networkx graph is generated otherwise the file is read from graph
+    # main("graph.csv","bestPartition.txt",3,0.9)
+else:
+    main(sys.argv[1],sys.argv[2],int(sys.argv[3]),float(sys.argv[4]))       # read input from command line parameters
