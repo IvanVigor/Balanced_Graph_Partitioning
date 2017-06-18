@@ -6,9 +6,10 @@ import itertools
 import numpy as np
 import timeit
 import bisect
+
 from BinPackerDynamic import Binpacker,Item
-from kernigan import kernighan_lin_bisection
-from Tree import Tree,TreeUtil
+from kernighanLin import kernighan_lin_bisection
+from Tree import Tree, TreeUtil
 
 import matplotlib.pyplot as plt
 
@@ -35,7 +36,6 @@ class GraphPartitioning(object):
 
     def fromNetworkXtoiGraph(self, subTree):  # Conversion from networkX data structure to igraph data
         newlist = []
-        weightVector = []
         edgeList = subTree.data.edges()
         for x in range(len(edgeList)):  # Conversion from NetworkX Graph to igraph data structure
             couple = []
@@ -97,15 +97,10 @@ class GraphPartitioning(object):
                     partition = mc.partition
             self.createSubTree(partition, subTree, threshold, G)
 
-    def balancedPartion(self,subTree, threshold, G):
-        monoWeight = True
+    def bilancedPartition(self, subTree, threshold, G):
         if (subTree.data.number_of_nodes() <= 1):  # if subtree is a leaf, return it
             return subTree
         else:
-            balanceCut = int(round(((self.epsilon / 3) / (
-            1 + self.epsilon / 3)) / 2 * subTree.data.number_of_nodes()))  # Evaluation of epsilon according to formula provided in paper
-            listOfNodes = subTree.data.nodes()  # Selection of two randon nodes in order to divide the graph in two separate parts
-            print("Avvio del taglio")
             partition = kernighan_lin_bisection(subTree.data)
             X = G.subgraph(partition[0])  # spotting the two sub-sets of division inside the original Graph G
             Y = G.subgraph(partition[1])
@@ -119,10 +114,10 @@ class GraphPartitioning(object):
             rightChild.right = None
             subTree.left = leftChild
             subTree.right = rightChild
-            if (self.getWeightsNodes(leftChild.data.node) > threshold):
-                self.balancedPartion(leftChild, threshold,G)
+            if (self.getWeightsNodes(leftChild.data.node) > threshold): #comments are the same of createSubTree function (before seen)
+                self.bilancedPartition(leftChild, threshold, G)
             if (self.getWeightsNodes(rightChild.data.node) > threshold):
-                self.balancedPartion(rightChild, threshold,G)
+                self.bilancedPartition(rightChild, threshold, G)
 
     def getWeightsNodes(self,nodes):                            # calculate of the total weight of nodes
         weight = 0
@@ -300,7 +295,8 @@ class GraphPartitioning(object):
         tempPartition = self.getPartitionInTree(temp, index, [0])
         if (tempPartition != None):
             for el in tempPartition:
-                num = math.ceil(math.log(self.num, 1 + self.epsilon / 2))
+                weightOfNodes = self.getWeightsNodes(el)
+                num = math.ceil(math.log(weightOfNodes, 1 + self.epsilon / 2))
                 num = math.pow(1 + self.epsilon / 2, num)
                 pos = bisect.bisect_left(GVector, num)
                 #pos = bisect.bisect_left(GVector, numberOfNodes)
@@ -354,7 +350,7 @@ class GraphPartitioning(object):
             for el in parition:
                 print(str(el) + " ")
         else:
-            print("non partition exists")
+            print("no partitions exist")
 
     def getCostPartition(self, parition, G):                                    # calculate and print the cost of the best partition
         totalCost = 0
@@ -402,7 +398,7 @@ class GraphPartitioning(object):
 
     def run(self):
         #self.division(self.root, self.epsilon * self.num / (3 * self.k), self.G)
-        self.balancedPartion(self.root, self.epsilon * self.num / (3 * self.k), self.G)     # partition the graph and generate the tree
+        self.bilancedPartition(self.root, self.epsilon * self.num / (3 * self.k), self.G)     # partition the graph and generate the tree
         listTrees = self.pruneTree(self.root)                                      # prune the tree
         listTotalCosts = self.scanTrees(listTrees)                                 # calculate the cost for each partition inside each tree
 
@@ -424,11 +420,12 @@ def main():
         G.node[n]['weight'] = 1 #random.random() * 100#
     epsilon = 0.9                                           # select the input parameter
     n = G.number_of_nodes()
-    k = 7
-    if (nx.is_connected(G)):
+    k = 3
+    if (nx.is_connected(G) and k<=n ):
         print("Avvio trasformazione di grafo in albero")
         partitor = GraphPartitioning(epsilon, n, k, G)      # create the object and pass it the intial graph
         bestP = partitor.run()                              # run the algorithm and return the best paritition
+        print("The best parition is:")
         partitor.printPartition(bestP)                      # print textually the best partition
         print("The cost of the parition is:")
         print(partitor.getCostPartition(bestP,G))           # calculate and print the cost of the best partition
