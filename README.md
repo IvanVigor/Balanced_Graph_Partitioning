@@ -5,7 +5,7 @@ Code authors: Lorenzo Frigerio, Ivan Vigorito
 
 ## Installation Windows 
 
-The code wast tested with python 3.5 with these additional libraries:
+The code was tested with python 3.5 with these additional libraries:
 - numpy
 - networkx
 - python-igraph
@@ -33,7 +33,7 @@ On Linux (and other Unix-like systems), you will need a C and a C++ compiler, th
 "make" and the development header files for your version of Python. On Debian and Ubuntu 
 Linux the "build-essential" and "python-dev" packages.
 
-The code run with these additional libraries:
+The code runs with these additional libraries:
 
 - numpy
 - networkx
