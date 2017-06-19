@@ -6,7 +6,7 @@ The file to launch is "Balancer_Cut"
 
 ## Libraries installation Windows 
 
-The code was tested with python 3.5 with these additional libraries:
+The code was tested on python 3.5 with these additional libraries:
 - numpy
 - networkx
 - python-igraph
@@ -26,7 +26,7 @@ In order to install them:
 		
 ## Library installation Linux 
 
-The code wast tested with Python 2.7.11 because igraph library is not compatible with
+The code wast tested on Python 2.7.11 because igraph library is not compatible with
 Python 2.7+ versions.
 
 ### Requirements
