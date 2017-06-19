@@ -330,7 +330,7 @@ class GraphPartitioning(object):
                 return 0,[]
             elif(vectorG not in self.unfeasibleSets):
                 self.unfeasibleSets.add(vectorG)
-            return math.inf,[]
+            return float("inf"),[]
         costs = []
         partitions = []
         for i in range(len(possiblePartitionsCost[index])):
