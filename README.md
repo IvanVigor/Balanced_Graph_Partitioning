@@ -2,8 +2,9 @@
 Accademic year 2016/17, course "Advanced Algorithms and Parallel Programming"
 Code authors: Lorenzo Frigerio, Ivan Vigorito
 
+The file to launch is "Balancer_Cut"
 
-## Installation Windows 
+## Libraries installation Windows 
 
 The code was tested with python 3.5 with these additional libraries:
 - numpy
@@ -23,7 +24,7 @@ In order to install them:
 
 
 		
-## Installation Linux 
+## Library installation Linux 
 
 The code wast tested with Python 2.7.11 because igraph library is not compatible with
 Python 2.7+ versions.
