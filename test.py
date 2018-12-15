@@ -468,8 +468,7 @@ def testEpsilon(samplesForValue,valuesOfEpsilon,G,k):
     saveToFile("test.txt", x, y)
 
 def testN(samplesForValue,k,gList,epsilon):
-    # G = nx.gaussian_random_partition_graph(50,2,0.1,0.6,0.6)
-    # G = nx.connected_watts_strogatz_graph(20,2,0.1)
+
     x = []
     y = []
     for i in range(len(gList)):
@@ -499,17 +498,8 @@ def main():
     #G = nx.connected_watts_strogatz_graph(20,2,0.1)
     #G = nx.dorogovtsev_goltsev_mendes_graph(2)
     for (u, v) in G.edges():
-        G.edge[u][v]['weight'] = 1#random.randint(0, 10)
+        G.edge[u][v]['weight'] = 1
 
     testEpsilon(5,[0.3,0.5],G,3)
 
-    #testK(5, [3, 4], G, 0.5)
-
-    #G2 = nx.gaussian_random_partition_graph(100, 2, 0.1, 0.6, 0.6)
-    #for (u, v) in G2.edges():
-    #    G2.edge[u][v]['weight'] = 1#random.randint(0, 10)
-    #listG = []
-    #listG.append(G)
-    #listG.append(G2)
-    #testN(5,3,[G,G2],0.5)
 main()
