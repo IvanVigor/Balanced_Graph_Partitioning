@@ -1,6 +1,5 @@
 # Project: Balanced Graph Partitioning
 Accademic year 2016/17, course "Advanced Algorithms and Parallel Programming"
-Code authors: Lorenzo Frigerio, Ivan Vigorito
 
 The file to launch is "Balancer_Cut"
 
@@ -49,3 +48,12 @@ The code runs with these additional libraries:
 		2) follow instructions on this page http://igraph.wikidot.com/installing-python-igraph-on-linux
 		[Ubuntu Linux version tested by us]
 		
+		
+##  License
+The code is provided with MIT license 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Authors
+
+Ivan Vigorito
+Lorenzo Frigerio
