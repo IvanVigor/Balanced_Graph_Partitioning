@@ -1,7 +1,5 @@
 # Project: Balanced Graph Partitioning
-Accademic year 2016/17, course "Advanced Algorithms and Parallel Programming"
-
-The file to launch is "Balancer_Cut"
+This is an implementation of the paper Balanced Graph Partitioning (authors: Konstantin Andreev, Harald Racke).  
 
 ## Libraries installation Windows 
 
@@ -20,6 +18,7 @@ In order to install them:
 		1) go to http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph
 		2) write in python console: "pip install path/to/igraph.whl"
 
+5) Then the file to launch is "Balancer_Cut"
 
 
 		
@@ -48,10 +47,16 @@ The code runs with these additional libraries:
 		2) follow instructions on this page http://igraph.wikidot.com/installing-python-igraph-on-linux
 		[Ubuntu Linux version tested by us]
 		
+5) Then the file to launch is "Balancer_Cut"
+		
 		
 ##  License
 The code is provided with MIT license 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## References
+
+Paper: "Balanced Graph Partitioning" http://www.math.cmu.edu/~kandreev/kpart.pdf
 
 ## Authors
 
