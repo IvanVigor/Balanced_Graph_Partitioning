@@ -11,9 +11,9 @@ The code was tested on python 3.5 with these additional libraries:
 In order to install them:
 
 1) Open Python console 
-2) write "pip install numpy" and wait termination
-3) write "pip install networkx" and wait termination
-4) write "pip install python-igraph" and wait termination
+2) write ` pip install numpy`  and wait termination
+3) write ` pip install networkx`  and wait termination
+4) write ` pip install python-igraph`  and wait termination
 	In case of failure of this last step:
 		1) go to http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph
 		2) write in python console: "pip install path/to/igraph.whl"
@@ -39,9 +39,9 @@ The code runs with these additional libraries:
 - python-igraph
 
 1) Open Python console 
-2) write "pip install numpy" and wait termination
-3) write "pip install networkx" and wait termination [remember to install the library in the right Python version (2.7)]
-4) write "pip install python-igraph" and wait termination
+2) write ` pip install numpy`  and wait termination
+3) write ` pip install networkx`  and wait termination [remember to install the library in the right Python version (2.7)]
+4) write ` pip install python-igraph`  and wait termination
 	In case of failure of this last step:
 		1) check "# Requirements"
 		2) follow instructions on this page http://igraph.wikidot.com/installing-python-igraph-on-linux
@@ -60,5 +60,4 @@ Paper: "Balanced Graph Partitioning" http://www.math.cmu.edu/~kandreev/kpart.pdf
 
 ## Authors
 
-Ivan Vigorito
-Lorenzo Frigerio
+Ivan Vigorito and Lorenzo Frigerio
