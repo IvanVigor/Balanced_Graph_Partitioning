@@ -1,4 +1,4 @@
-# Project: Balanced Graph Partitioning
+# Balanced Graph Partitioning
 This is an implementation of the paper Balanced Graph Partitioning (authors: Konstantin Andreev, Harald Racke).  
 
 ## Libraries installation Windows 
