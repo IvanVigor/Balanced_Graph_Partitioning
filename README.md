@@ -60,4 +60,4 @@ Paper: "Balanced Graph Partitioning" http://www.math.cmu.edu/~kandreev/kpart.pdf
 
 ## Authors
 
-Ivan Vigorito and Lorenzo Frigerio
+[Ivan Vigorito](https://github.com/IvanVigor) and Lorenzo Frigerio
