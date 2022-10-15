@@ -1,5 +1,7 @@
 # Balanced Graph Partitioning
-This is an implementation of the paper Balanced Graph Partitioning (authors: Konstantin Andreev, Harald Racke).  
+This is an implementation of the paper Balanced Graph Partitioning (authors: Konstantin Andreev, Harald Racke). 
+
+![struct](https://github.com/IvanVigor/Balanced_Graph_Partitioning/blob/master/imgs/struct.png?raw=true)
 
 ## Libraries installation Windows 
 
@@ -22,8 +24,7 @@ In order to install them:
 
 ## Results 
 
-![img]()
-
+![img](https://github.com/IvanVigor/Balanced_Graph_Partitioning/blob/master/imgs/results.png?raw=true)
 
 		
 ## Library installation Linux [Outdated]
@@ -56,6 +57,7 @@ The code runs with these additional libraries:
 		
 ##  License
 The code is provided with MIT license 
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## References
