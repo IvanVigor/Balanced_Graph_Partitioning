@@ -20,12 +20,16 @@ In order to install them:
 
 5) Then the file to launch is "Balancer_Cut"
 
+## Results 
+
+![img]()
+
 
 		
-## Library installation Linux 
+## Library installation Linux [Outdated]
 
 The code wast tested on Python 2.7.11 because igraph library is not compatible with
-Python 2.7+ versions.
+Python 2.7+ versions. 
 
 ### Requirements
 On Linux (and other Unix-like systems), you will need a C and a C++ compiler, the tool 
