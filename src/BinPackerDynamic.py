@@ -58,8 +58,7 @@ class Item(object):
 
 class Bin(object):
     def __init__(self, capacity):
-        """Initialize Bin instance
-        """
+        """Initialize Bin instance"""
 
         self._items = []
         self._utilization = 0
@@ -85,15 +84,13 @@ class Bin(object):
 
     @property
     def capacity(self):
-        """Return capacity
-        """
+        """Return capacity"""
 
         return self._capacity
 
     @property
     def total_weight(self):
-        """Return subtotal of the weights
-        """
+        """Return subtotal of the weights"""
 
         return sum([i.weight for i in self._items])
 
@@ -106,7 +103,6 @@ class Bin(object):
 
         total_weight = sum([i.weight for i in self._items])
         return round((total_weight / self._capacity) * 100, 2)
-
 
     def push(self, item):
         """Push Item into heap.
@@ -137,7 +133,6 @@ class Bin(object):
                 break
         del self._items[index]
         heapq.heapify(self._items)
-
 
     def get_items(self, attribute=None, value=None):
         """Search for item in the bin by attribute
@@ -185,14 +180,13 @@ class Binpacker(object):
             if i.weight > self._capacity:
                 raise Exception(
                     'Weight of Item: "{}" exceeds the maximum '
-                    'bin capacity: {}.'.format(
-                        i.name, self._capacity))
+                    "bin capacity: {}.".format(i.name, self._capacity)
+                )
         self._items = items
 
     @property
     def bins(self):
-        """Return Bin objects.
-        """
+        """Return Bin objects."""
 
         return self._bins
 
@@ -206,13 +200,9 @@ class Binpacker(object):
         self._bins = bins
 
     def get_truth_table(self, capacity, items):
-        """Generate truth table.
-        """
+        """Generate truth table."""
 
-        m = [
-            [True for j in range(int(capacity + 1))]
-            for i in range(len(items))
-        ]
+        m = [[True for j in range(int(capacity + 1))] for i in range(len(items))]
         for index, item in enumerate(items, 1):
             i = index - 1
             for j in range(0, int(capacity + 1)):
@@ -263,7 +253,7 @@ class Binpacker(object):
             self._bins[bin_index].push(self._items[i])
             del self._items[i]
 
-    def pack_items(self,k):
+    def pack_items(self, k):
         """Pack items into bin(s).
         Calculate minimum number of bin(s) needed and what items
         go to which bin. At the end of this method, all items
@@ -287,13 +277,13 @@ class Binpacker(object):
         while len(self._items) > 0:
             m = self.get_truth_table(self._capacity, self._items)
             new_bin = Bin(self._capacity)
-            new_bin.name = '[NEW BIN {}]'.format(len(self._bins))
+            new_bin.name = "[NEW BIN {}]".format(len(self._bins))
             self._bins.append(new_bin)
-            if (len(self._bins) > k):
+            if len(self._bins) > k:
                 return False
             else:
                 bin_index = len(self._bins) - 1
                 picked_items = self._pick_items(m)
                 self._move_items_to_bin(picked_items, bin_index)
-        if(len(self._items)== 0):
+        if len(self._items) == 0:
             return True

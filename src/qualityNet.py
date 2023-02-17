@@ -19,16 +19,14 @@ import networkx as nx
 from networkx import NetworkXError
 from networkx.utils import not_implemented_for
 
-__all__ = ['coverage', 'modularity', 'performance']
+__all__ = ["coverage", "modularity", "performance"]
 
 
 class NotAPartition(NetworkXError):
-    """Raised if a given collection is not a partition.
-
-    """
+    """Raised if a given collection is not a partition."""
 
     def __init__(self, G, collection):
-        msg = '{} is not a valid partition of the graph {}'
+        msg = "{} is not a valid partition of the graph {}"
         msg = msg.format(G, collection)
         super(NotAPartition, self).__init__(msg)
 
@@ -89,9 +87,11 @@ def require_partition(func):
     def new_func(*args, **kw):
         # Here we assume that the first two arguments are (G, partition).
         if not is_partition(*args[:2]):
-            raise nx.NetworkXError('`partition` is not a valid partition of'
-                                   ' the nodes of G')
+            raise nx.NetworkXError(
+                "`partition` is not a valid partition of" " the nodes of G"
+            )
         return func(*args, **kw)
+
     return new_func
 
 
@@ -166,7 +166,7 @@ def inter_community_non_edges(G, partition):
     return inter_community_edges(nx.complement(G), partition)
 
 
-@not_implemented_for('multigraph')
+@not_implemented_for("multigraph")
 @require_partition
 def performance(G, partition):
     """Returns the performance of a partition.
@@ -221,7 +221,6 @@ def performance(G, partition):
     return (intra_edges + inter_edges) / total_pairs
 
 
-
 @require_partition
 def coverage(G, partition):
     """Returns the coverage of a partition.
@@ -265,8 +264,7 @@ def coverage(G, partition):
     return intra_edges / total_edges
 
 
-
-def modularity(G, communities, weight='weight'):
+def modularity(G, communities, weight="weight"):
     r"""Returns the modularity of the given partition of the graph.
 
     Modularity is defined in [1]_ as

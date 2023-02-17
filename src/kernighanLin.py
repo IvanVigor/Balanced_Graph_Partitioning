@@ -21,7 +21,8 @@ import random
 import networkx as nx
 from networkx.utils import not_implemented_for
 from .qualityNet import is_partition
-__all__ = ['kernighan_lin_bisection']
+
+__all__ = ["kernighan_lin_bisection"]
 
 
 def _compute_delta(G, A, B, weight):
@@ -91,8 +92,8 @@ def _kernighan_lin_pass(G, A, B, weight):
     return gains
 
 
-@not_implemented_for('directed')
-def kernighan_lin_bisection(G, partition=None, max_iter=10, weight='weight'):
+@not_implemented_for("directed")
+def kernighan_lin_bisection(G, partition=None, max_iter=10, weight="weight"):
     """Partition a graph into two blocks using the Kernighan–Lin
     algorithm.
     This algorithm paritions a network into two sets by iteratively
@@ -135,9 +136,9 @@ def kernighan_lin_bisection(G, partition=None, max_iter=10, weight='weight'):
     try:
         A, B = set(partition[0]), set(partition[1])
     except:
-        raise ValueError('partition must be two sets')
+        raise ValueError("partition must be two sets")
     if not is_partition(G, (A, B)):
-        raise nx.NetworkXError('partition invalid')
+        raise nx.NetworkXError("partition invalid")
     for i in range(max_iter):
         # `gains` is a list of triples of the form (g, u, v) for each
         # node pair (u, v), where `g` is the gain of that node pair.
@@ -150,7 +151,7 @@ def kernighan_lin_bisection(G, partition=None, max_iter=10, weight='weight'):
         # gain, and collect each `u` into `anodes` and each `v` into
         # `bnodes`, for each pair `(u, v)`.
         index = csum.index(max_cgain)
-        nodesets = islice(zip(*gains[:index + 1]), 1, 3)
+        nodesets = islice(zip(*gains[: index + 1]), 1, 3)
         anodes, bnodes = (set(s) for s in nodesets)
         A |= bnodes
         A -= anodes
